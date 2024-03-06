@@ -1,4 +1,4 @@
-﻿namespace DotNet8.Server.Models;
+﻿namespace DotNet8.Shared.Models.Blog;
 
 public class BlogViewModel
 {

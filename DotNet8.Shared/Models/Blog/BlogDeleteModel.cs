@@ -1,3 +1,3 @@
-﻿namespace DotNet8.Client.Models;
+﻿namespace DotNet8.Shared.Models.Blog;
 
 public record BlogDeleteModel(int BlogId);

@@ -1,8 +1,10 @@
-using DotNet8.Server.Models.Settings;
-using DotNet8.Server.Services;
+using GreenPipes;
 using MassTransit;
+using MassTransit.Definition;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using DotNet8.Shared.Models.Settings;
+using DotNet8.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +25,13 @@ builder.Services.AddMassTransit(x =>
     {
         var rabbitMqSettings = builder.Configuration.GetSection(nameof(RabbitMQSettings)).Get<RabbitMQSettings>();
         configure.Host(rabbitMqSettings.Host);
+        configure.ConfigureEndpoints(context, new KebabCaseEndpointNameFormatter("Server", false));
+        configure.UseMessageRetry(retryConfigurator =>
+        {
+            retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
+        });
     });
-});
+}).AddMassTransitHostedService();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
