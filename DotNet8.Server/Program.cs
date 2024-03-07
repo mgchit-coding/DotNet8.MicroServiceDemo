@@ -3,6 +3,7 @@ using MassTransit;
 using MassTransit.Definition;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using DotNet8.Server;
 using DotNet8.Shared.Models.Settings;
 using DotNet8.Shared.Services;
 
@@ -33,6 +34,7 @@ builder.Services.AddMassTransit(x =>
     });
 }).AddMassTransitHostedService();
 
+builder.Services.AddServices();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

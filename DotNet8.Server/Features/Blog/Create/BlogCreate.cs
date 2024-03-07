@@ -2,16 +2,15 @@
 
 public class BlogCreate : IConsumer<BlogCreateModel>
 {
-    private readonly AppDbContext _appDbContext;
+    private readonly BL_BlogCreate _bL_BlogCreate;
 
-    public BlogCreate(AppDbContext appDbContext)
+    public BlogCreate(BL_BlogCreate bLBlogCreate)
     {
-        _appDbContext = appDbContext;
+        _bL_BlogCreate = bLBlogCreate;
     }
 
-    public Task Consume(ConsumeContext<BlogCreateModel> context)
+    public async Task Consume(ConsumeContext<BlogCreateModel> context)
     {
-        var model = context.Message;
-        return Task.CompletedTask;
+        await _bL_BlogCreate.BlogCreate(context.Message);
     }
 }
