@@ -1,18 +1,12 @@
 ```
-#your currenly installed docker version
-version: "4.21.1"
+create table Tbl_Blog
+(
+    Blog_Id      int identity
+        constraint PK_Tbl_Blog
+            primary key,
+    Blog_Title   nvarchar(50),
+    Blog_Author  nvarchar(50),
+    Blog_Content nvarchar(200) 
+go
 
-services:
- rabbitmq:
-  image: rabbitmq:management
-  container_name: rabbitmq
-  ports:
-   - 5672:5672
-   - 15672:15672
-  volumes:
-   - rabbitmqdata:/var/lib/rabbitmq
-  hostname: rabbitmq
-  
-volumes:
- rabbitmqdata:   
 ```

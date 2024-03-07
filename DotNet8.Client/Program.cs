@@ -5,6 +5,7 @@ using System.Reflection;
 using DotNet8.Shared.Models.Settings;
 using DotNet8.Shared.Services;
 using GreenPipes;
+using DotNet8.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,8 @@ builder.Services.AddMassTransit(x =>
         });
     });
 }).AddMassTransitHostedService();
+
+builder.Services.AddServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

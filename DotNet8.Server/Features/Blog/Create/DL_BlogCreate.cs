@@ -18,9 +18,9 @@ namespace DotNet8.Server.Features.Blog.Create
                 await _context.Blog.AddAsync(model);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(ex.ToString());
                 throw;
             }
         }

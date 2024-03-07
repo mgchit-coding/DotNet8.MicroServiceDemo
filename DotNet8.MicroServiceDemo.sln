@@ -9,10 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet8.Server", "DotNet8.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{F3297EC0-D6C8-406F-954A-B32D08FC0E01}"
 	ProjectSection(SolutionItems) = preProject
+		docker-rabbitmq.yml = docker-rabbitmq.yml
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet8.Shared", "DotNet8.Shared\DotNet8.Shared.csproj", "{499C0EA4-0E3F-4013-9B1D-555D3A2F1462}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet8.Shared", "DotNet8.Shared\DotNet8.Shared.csproj", "{499C0EA4-0E3F-4013-9B1D-555D3A2F1462}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
