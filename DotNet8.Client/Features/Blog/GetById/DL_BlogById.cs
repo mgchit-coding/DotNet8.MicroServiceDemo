@@ -17,7 +17,7 @@ namespace DotNet8.Client.Features.Blog.GetById
             {
                 var blog = await _context.Blog
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(x=> x.Blog_Id == id);
+                    .FirstOrDefaultAsync(x=> x.BlogId == id);
                 return blog;
             }
             catch (Exception e)

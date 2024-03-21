@@ -13,9 +13,9 @@ namespace DotNet8.Shared.Models
         {
             var model = new BlogDataModel()
             {
-               Blog_Author = requestModel.BlogAuthor,
-               Blog_Content = requestModel.BlogContent,
-               Blog_Title = requestModel.BlogTitle
+               BlogAuthor = requestModel.BlogAuthor,
+               BlogContent = requestModel.BlogContent,
+               BlogTitle = requestModel.BlogTitle
             };
 
             return model;

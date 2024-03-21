@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet8.Server", "DotNet8.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{F3297EC0-D6C8-406F-954A-B32D08FC0E01}"
 	ProjectSection(SolutionItems) = preProject
-		docker-rabbitmq.yml = docker-rabbitmq.yml
+		docker-compose.yml = docker-compose.yml
 		readme.md = readme.md
 	EndProjectSection
 EndProject

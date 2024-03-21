@@ -17,11 +17,11 @@ namespace DotNet8.Server.Features.Blog.Update
             {
                 var blog = await _context.Blog
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.Blog_Id == model.Id);
+                    .FirstOrDefaultAsync(x => x.BlogId == model.Id);
                 if (blog == null) return;
 
-                blog.Blog_Author = model.BlogAuthor;
-                blog.Blog_Content = model.BlogContent;
+                blog.BlogAuthor = model.BlogAuthor;
+                blog.BlogContent = model.BlogContent;
                 _context.Blog.Update(blog);
                 await _context.SaveChangesAsync();
             }

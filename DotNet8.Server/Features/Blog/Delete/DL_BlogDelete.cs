@@ -17,7 +17,7 @@ namespace DotNet8.Server.Features.Blog.Delete
             {
                 var blog = await _context.Blog
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.Blog_Id == model.BlogId);
+                    .FirstOrDefaultAsync(x => x.BlogId == model.BlogId);
                 if (blog == null) return;
                 _context.Blog.Remove(blog);
                 await _context.SaveChangesAsync();
