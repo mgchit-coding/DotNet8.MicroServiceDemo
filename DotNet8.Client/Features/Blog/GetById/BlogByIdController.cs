@@ -1,23 +1,35 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNet8.Client.Features.Blog.GetById
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogByIdController : ControllerBase
+    public class BlogByIdController : BaseController
     {
-        private readonly BL_BlogById _bL_BlogById;
+        private readonly AppDbContext _context;
 
-        public BlogByIdController(BL_BlogById bl_BlogById)
+        public BlogByIdController(AppDbContext context)
         {
-            _bL_BlogById = bl_BlogById;
+            _context = context;
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> BlogById(int id)
         {
-            var result = await _bL_BlogById.BlogById(id);
-            return Ok(result);
+            try
+            {
+                var result = await _context.Blog
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.BlogId == id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

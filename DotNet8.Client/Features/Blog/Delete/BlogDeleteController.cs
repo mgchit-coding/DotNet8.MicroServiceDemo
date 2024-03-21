@@ -5,20 +5,27 @@ namespace DotNet8.Client.Features.Blog.Delete
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogDeleteController : ControllerBase
+    public class BlogDeleteController : BaseController
     {
-        private readonly BL_BlogDelete _bL_BlogDelete;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public BlogDeleteController(BL_BlogDelete bL_BlogDelete)
+        public BlogDeleteController(IPublishEndpoint publishEndpoint)
         {
-            _bL_BlogDelete = bL_BlogDelete;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpPost, Route("Delete")]
         public async Task<IActionResult> BlogDelete(BlogDeleteModel model)
         {
-            await _bL_BlogDelete.BlogDelete(model);
-            return Ok();
+            try
+            {
+                await _publishEndpoint.Publish(model);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

@@ -5,20 +5,27 @@ namespace DotNet8.Client.Features.Blog.Create
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogCreateController : ControllerBase
+    public class BlogCreateController : BaseController
     {
-        private readonly BL_BlogCreate _bL_BlogCreate;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public BlogCreateController(BL_BlogCreate bL_BlogCreate)
+        public BlogCreateController(IPublishEndpoint publishEndpoint)
         {
-            _bL_BlogCreate = bL_BlogCreate;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpPost, Route("Create")]
         public async Task<IActionResult> BlogCreate(BlogCreateModel model)
         {
-            await _bL_BlogCreate.BlogCreate(model);
-            return Ok();
+            try
+            {
+                await _publishEndpoint.Publish(model);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

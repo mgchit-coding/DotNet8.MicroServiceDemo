@@ -1,23 +1,32 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNet8.Client.Features.Blog.Get
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogListController : ControllerBase
+    public class BlogListController : BaseController
     {
-        private readonly BL_BlogList _Bl_BlogList;
+        private readonly AppDbContext _context;
 
-        public BlogListController(BL_BlogList bl_BlogList)
+        public BlogListController(AppDbContext context)
         {
-            _Bl_BlogList = bl_BlogList;
+            _context = context;
         }
+
         [HttpGet]
         public async Task<IActionResult> BlogList()
         {
-            var result = await _Bl_BlogList.BlogList();
-            return Ok(result);
+            try
+            {
+                var result = await _context.Blog.AsNoTracking().ToListAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

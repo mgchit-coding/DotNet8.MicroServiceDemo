@@ -5,19 +5,27 @@ namespace DotNet8.Client.Features.Blog.Update
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogUpdateController : ControllerBase
+    public class BlogUpdateController : BaseController
     {
-        private readonly BL_BlogUpdate _bL_BlogUpdate;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public BlogUpdateController(BL_BlogUpdate bL_BlogUpdate)
+        public BlogUpdateController(IPublishEndpoint publishEndpoint)
         {
-            _bL_BlogUpdate = bL_BlogUpdate;
+            _publishEndpoint = publishEndpoint;
         }
+
         [HttpPost, Route("Update")]
         public async Task<IActionResult> BlogUpdate(BlogUpdateModel model)
         {
-            await _bL_BlogUpdate.BlogUpdate(model);
-            return Ok();
+            try
+            {
+                await _publishEndpoint.Publish(model);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }
