@@ -1,28 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DotNet8.Server.Features.Blog.Create
+namespace DotNet8.Server.Features.Blog.Create;
+
+public class DL_BlogCreate
 {
-    public class DL_BlogCreate
+    private readonly AppDbContext _context;
+
+    public DL_BlogCreate(AppDbContext context)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public DL_BlogCreate(AppDbContext context)
+    public async Task BlogCreate(BlogDataModel model)
+    {
+        try
         {
-            _context = context;
+            await _context.Blog.AddAsync(model);
+            await _context.SaveChangesAsync();
         }
-
-        public async Task BlogCreate(BlogDataModel model)
+        catch (Exception ex)
         {
-            try
-            {
-                await _context.Blog.AddAsync(model);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw;
-            }
+            Console.WriteLine(ex.ToString());
+            throw;
         }
     }
 }

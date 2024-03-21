@@ -1,17 +1,16 @@
-﻿namespace DotNet8.Server.Features.Blog.Delete
+﻿namespace DotNet8.Server.Features.Blog.Delete;
+
+public class BlogDelete : IConsumer<BlogDeleteModel>
 {
-    public class BlogDelete : IConsumer<BlogDeleteModel>
+    private readonly BL_BlogDelete _bL_BlogDelete;
+
+    public BlogDelete(BL_BlogDelete bLBlogDelete)
     {
-        private readonly BL_BlogDelete _bL_BlogDelete;
+        _bL_BlogDelete = bLBlogDelete;
+    }
 
-        public BlogDelete(BL_BlogDelete bLBlogDelete)
-        {
-            _bL_BlogDelete = bLBlogDelete;
-        }
-
-        public async Task Consume(ConsumeContext<BlogDeleteModel> context)
-        {
-            await _bL_BlogDelete.BlogDelete(context.Message);
-        }
+    public async Task Consume(ConsumeContext<BlogDeleteModel> context)
+    {
+        await _bL_BlogDelete.BlogDelete(context.Message);
     }
 }

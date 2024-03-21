@@ -3,33 +3,32 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNet8.Client.Features.Blog.GetById
+namespace DotNet8.Client.Features.Blog.GetById;
+
+[Route("api/[controller]")]
+[ApiController]
+public class BlogByIdController : BaseController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BlogByIdController : BaseController
+    private readonly AppDbContext _context;
+
+    public BlogByIdController(AppDbContext context)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public BlogByIdController(AppDbContext context)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> BlogById(int id)
+    {
+        try
         {
-            _context = context;
+            var result = await _context.Blog
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.BlogId == id);
+            return Ok(result);
         }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> BlogById(int id)
+        catch (Exception ex)
         {
-            try
-            {
-                var result = await _context.Blog
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.BlogId == id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            return InternalServerError(ex);
         }
     }
 }

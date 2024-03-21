@@ -1,31 +1,30 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNet8.Client.Features.Blog.Update
+namespace DotNet8.Client.Features.Blog.Update;
+
+[Route("api/[controller]")]
+[ApiController]
+public class BlogUpdateController : BaseController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BlogUpdateController : BaseController
+    private readonly IPublishEndpoint _publishEndpoint;
+
+    public BlogUpdateController(IPublishEndpoint publishEndpoint)
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        _publishEndpoint = publishEndpoint;
+    }
 
-        public BlogUpdateController(IPublishEndpoint publishEndpoint)
+    [HttpPost, Route("Update")]
+    public async Task<IActionResult> BlogUpdate(BlogUpdateModel model)
+    {
+        try
         {
-            _publishEndpoint = publishEndpoint;
+            await _publishEndpoint.Publish(model);
+            return Ok();
         }
-
-        [HttpPost, Route("Update")]
-        public async Task<IActionResult> BlogUpdate(BlogUpdateModel model)
+        catch (Exception ex)
         {
-            try
-            {
-                await _publishEndpoint.Publish(model);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            return InternalServerError(ex);
         }
     }
 }

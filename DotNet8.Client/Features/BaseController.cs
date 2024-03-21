@@ -1,19 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNet8.Client.Features
+namespace DotNet8.Client.Features;
+
+[Route("api/[controller]")]
+[ApiController]
+public class BaseController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BaseController : ControllerBase
+    public IActionResult InternalServerError(Exception ex)
     {
-        public IActionResult InternalServerError(Exception ex)
+        return StatusCode(500, new
         {
-            return StatusCode(500, new
-            {
-                IsSuccess = false,
-                Message = ex.ToString()
-            });
-        }
+            IsSuccess = false,
+            Message = ex.ToString()
+        });
     }
 }
